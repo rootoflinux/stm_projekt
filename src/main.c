@@ -119,7 +119,7 @@ void vyblikaj(float* pfData){
             }
         }
         
-        for(i = 0; i < 6; i++){
+        for(i = 0; i < 3; i++){
             
                 if(pfData[i] == 0){
                     
@@ -169,7 +169,7 @@ void vyblikaj(float* pfData){
 }
 
 int main(){
-    float *pfData=0;
+    float pfData[3];
     
     
      
