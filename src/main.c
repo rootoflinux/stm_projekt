@@ -170,13 +170,23 @@ void vyblikaj(float* pfData){
 
 int main(){
     float pfData[3];
+	int i;
     
+    while(1)
+	{ 
+	for(i=0; i<3; i++)
+	{
+                pfData[i]=0;
+        }
     
-    while(1){ 
-    Demo_CompassReadAcc(pfData); //do pfData sa uloozia 3 cisla s 3 osi
+
+	Demo_CompassReadAcc(pfData); //do pfData sa uloozia 3 cisla s 3 osi
     
-    vyblikaj(pfData);
-    }
+   	vyblikaj(pfData);
+
+
+    	}
+}
     
 
 
