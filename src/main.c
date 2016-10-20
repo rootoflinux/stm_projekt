@@ -172,11 +172,11 @@ int main(){
     float pfData[3];
     
     
-     
-    Demo_CompassReadAcc(pfData);
+    while(1){ 
+    Demo_CompassReadAcc(pfData); //do pfData sa uloozia 3 cisla s 3 osi
     
     vyblikaj(pfData);
-    
+    }
     
 
 
