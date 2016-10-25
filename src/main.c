@@ -171,6 +171,18 @@ void vyblikaj(float* pfData){
 int main(){
     float pfData[3];
 	int i;
+
+	RCC_GetClocksFreq(&RCC_Clocks);
+ 	SysTick_Config(RCC_Clocks.HCLK_Frequency / 100);
+
+	STM_EVAL_LEDInit(LED3);
+  	STM_EVAL_LEDInit(LED4);
+  	STM_EVAL_LEDInit(LED5);
+ 	STM_EVAL_LEDInit(LED6);
+ 	STM_EVAL_LEDInit(LED7);
+	STM_EVAL_LEDInit(LED8);
+  	STM_EVAL_LEDInit(LED9);
+  	STM_EVAL_LEDInit(LED10);
     
     while(1)
 	{ 
