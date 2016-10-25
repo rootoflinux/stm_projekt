@@ -7,7 +7,7 @@
 #define LSM_Acc_Sensitivity_8g     (float)     0.25f           /*!< accelerometer sensitivity with 8 g full scale [LSB/mg] */
 #define LSM_Acc_Sensitivity_16g    (float)     0.0834f         /*!< accelerometer sensitivity with 12 g full scale [LSB/mg] */
 
-#define cas 100
+#define cas 5
 
   RCC_ClocksTypeDef RCC_Clocks;
 __IO uint32_t TimingDelay = 0;
@@ -154,6 +154,8 @@ void vyblikaj(float* pfData){
         }
         
         for(i = 0; i < 3; i++){
+
+	//STM_EVAL_LEDOn(LED4); //testovaci 
             
                 if(pfData[i] == 0){
                     
@@ -207,7 +209,7 @@ void vyblikaj(float* pfData){
             
         }
     
-    
+   return; 
 }
 
 int main(){
@@ -244,10 +246,10 @@ int main(){
     	
 	vyblikaj(pfData);
 	
-	STM_EVAL_LEDOn(LED7); // nezopina problem je v Demo_COmpassRead
-   	
-	
-	STM_EVAL_LEDOff(LED7); // test bod vyp
+	//nevyskoci z vyblikaj
+	STM_EVAL_LEDOn(LED3);
+        
+
 
     	}
 
