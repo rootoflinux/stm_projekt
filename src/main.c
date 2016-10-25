@@ -34,6 +34,40 @@ void TimingDelay_Decrement(void)
 }
 
 
+void Demo_CompassConfig(void)
+{
+  LSM303DLHCMag_InitTypeDef LSM303DLHC_InitStructure;
+  LSM303DLHCAcc_InitTypeDef LSM303DLHCAcc_InitStructure;
+  LSM303DLHCAcc_FilterConfigTypeDef LSM303DLHCFilter_InitStructure;
+  
+  /* Configure MEMS magnetometer main parameters: temp, working mode, full Scale and Data rate */
+  LSM303DLHC_InitStructure.Temperature_Sensor = LSM303DLHC_TEMPSENSOR_DISABLE;
+  LSM303DLHC_InitStructure.MagOutput_DataRate =LSM303DLHC_ODR_30_HZ ;
+  LSM303DLHC_InitStructure.MagFull_Scale = LSM303DLHC_FS_8_1_GA;
+  LSM303DLHC_InitStructure.Working_Mode = LSM303DLHC_CONTINUOS_CONVERSION;
+  LSM303DLHC_MagInit(&LSM303DLHC_InitStructure);
+  
+   /* Fill the accelerometer structure */
+  LSM303DLHCAcc_InitStructure.Power_Mode = LSM303DLHC_NORMAL_MODE;
+  LSM303DLHCAcc_InitStructure.AccOutput_DataRate = LSM303DLHC_ODR_50_HZ;
+  LSM303DLHCAcc_InitStructure.Axes_Enable= LSM303DLHC_AXES_ENABLE;
+  LSM303DLHCAcc_InitStructure.AccFull_Scale = LSM303DLHC_FULLSCALE_2G;
+  LSM303DLHCAcc_InitStructure.BlockData_Update = LSM303DLHC_BlockUpdate_Continous;
+  LSM303DLHCAcc_InitStructure.Endianness=LSM303DLHC_BLE_LSB;
+  LSM303DLHCAcc_InitStructure.High_Resolution=LSM303DLHC_HR_ENABLE;
+  /* Configure the accelerometer main parameters */
+  LSM303DLHC_AccInit(&LSM303DLHCAcc_InitStructure);
+  
+  /* Fill the accelerometer LPF structure */
+  LSM303DLHCFilter_InitStructure.HighPassFilter_Mode_Selection =LSM303DLHC_HPM_NORMAL_MODE;
+  LSM303DLHCFilter_InitStructure.HighPassFilter_CutOff_Frequency = LSM303DLHC_HPFCF_16;
+  LSM303DLHCFilter_InitStructure.HighPassFilter_AOI1 = LSM303DLHC_HPF_AOI1_DISABLE;
+  LSM303DLHCFilter_InitStructure.HighPassFilter_AOI2 = LSM303DLHC_HPF_AOI2_DISABLE;
+
+  /* Configure the accelerometer LPF main parameters */
+  LSM303DLHC_AccFilterConfig(&LSM303DLHCFilter_InitStructure);
+}
+
 void Demo_CompassReadAcc(float* pfData)
 {
   int16_t pnRawData[3];
@@ -161,7 +195,15 @@ void vyblikaj(float* pfData){
                 }
             
            
-            
+            STM_EVAL_LEDOff(LED10);
+            STM_EVAL_LEDOff(LED3);
+            STM_EVAL_LEDOff(LED6);
+            STM_EVAL_LEDOff(LED7);
+            STM_EVAL_LEDOff(LED4);
+            STM_EVAL_LEDOff(LED8);
+            STM_EVAL_LEDOff(LED9);
+            STM_EVAL_LEDOff(LED5);
+            Delay(cas);
             
         }
     
@@ -183,29 +225,34 @@ int main(){
 	STM_EVAL_LEDInit(LED8);
   	STM_EVAL_LEDInit(LED9);
   	STM_EVAL_LEDInit(LED10);
-
-	STM_EVAL_LEDOn(LED10); //pomocny bod
+	
+	//STM_EVAL_LEDOn(LED10); //pomocny bod
     
+
+	Demo_CompassConfig();
     while(1)
 	{ 
 	
 	
 	for(i=0; i<3; i++)
 	{
-                pfData[i]=0;
+                pfData[i]=0.0;
         }
     
 	
 	Demo_CompassReadAcc(pfData); //do pfData sa uloozia 3 cisla s 3 osi
-    	STM_EVAL_LEDOn(LED7); // nezopina problem je v Demo_COmpassRead
-   	vyblikaj(pfData);
+    	
+	vyblikaj(pfData);
+	
+	STM_EVAL_LEDOn(LED7); // nezopina problem je v Demo_COmpassRead
+   	
 	
 	STM_EVAL_LEDOff(LED7); // test bod vyp
 
     	}
 
     
-	STM_EVAL_LEDOn(LED4); // test bod
+	//STM_EVAL_LEDOn(LED4); // test bod
 
 
 }
