@@ -99,7 +99,7 @@ void Demo_CompassReadAcc(float* pfData)
   {
     pfData[i]=(float)pnRawData[i]/LSM_Acc_Sensitivity;
   }
-
+	return;
 }
 
 void vyblikaj(float* pfData){
@@ -183,24 +183,29 @@ int main(){
 	STM_EVAL_LEDInit(LED8);
   	STM_EVAL_LEDInit(LED9);
   	STM_EVAL_LEDInit(LED10);
+
+	STM_EVAL_LEDOn(LED10); //pomocny bod
     
     while(1)
 	{ 
+	
+	
 	for(i=0; i<3; i++)
 	{
                 pfData[i]=0;
         }
     
-
+	
 	Demo_CompassReadAcc(pfData); //do pfData sa uloozia 3 cisla s 3 osi
-    
+    	STM_EVAL_LEDOn(LED7); // nezopina problem je v Demo_COmpassRead
    	vyblikaj(pfData);
-
+	
+	STM_EVAL_LEDOff(LED7); // test bod vyp
 
     	}
 
     
-
+	STM_EVAL_LEDOn(LED4); // test bod
 
 
 }
