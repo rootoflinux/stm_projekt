@@ -40,7 +40,7 @@ void Delay(__IO uint32_t nTime)
   TimingDelay = nTime;
 
   while(TimingDelay != 0);
-	//TimingDelay_Decrement();
+	
 }
 
 /**
@@ -287,15 +287,16 @@ int main(void){
        	 	}
     
 	
-	//Demo_CompassReadAcc(pfData); //do pfData sa uloozia 3 cisla s 3 osi
+	Demo_CompassReadAcc(pfData); //do pfData sa uloozia 3 cisla s 3 osi
     	
-	//vyblikaj(pfData);
+	vyblikaj(pfData);
+	Delay(50);
+
 	
-	//nevyskoci z vyblikaj
-	STM_EVAL_LEDOff(LED3);
-	Delay(50);
-	STM_EVAL_LEDOn(LED3);
-	Delay(50);
+	//STM_EVAL_LEDOff(LED3);
+	//Delay(50);
+	//STM_EVAL_LEDOn(LED3);
+	//Delay(50);
         
 
 
