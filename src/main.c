@@ -1,16 +1,38 @@
-#include"stm32f3_discovery_lsm303dlhc.h"
+/*#include"stm32f3_discovery_lsm303dlhc.h"
 #include"stm32f3_discovery.h"
 #include "stm32f30x.h"
+*/
+#include "main.h"
+
 
 #define LSM_Acc_Sensitivity_2g     (float)     1.0f            /*!< accelerometer sensitivity with 2 g full scale [LSB/mg] */
 #define LSM_Acc_Sensitivity_4g     (float)     0.5f            /*!< accelerometer sensitivity with 4 g full scale [LSB/mg] */
 #define LSM_Acc_Sensitivity_8g     (float)     0.25f           /*!< accelerometer sensitivity with 8 g full scale [LSB/mg] */
 #define LSM_Acc_Sensitivity_16g    (float)     0.0834f         /*!< accelerometer sensitivity with 12 g full scale [LSB/mg] */
 
-#define cas 5
+#define cas 50
 
+
+/* Private variables ---------------------------------------------------------*/
   RCC_ClocksTypeDef RCC_Clocks;
 __IO uint32_t TimingDelay = 0;
+
+/* Private function prototypes -----------------------------------------------*/
+void TimingDelay_Decrement(void);
+void Delay(__IO uint32_t nTime);
+
+/* Private functions ---------------------------------------------------------*/
+
+/**
+  * @brief  This function handles SysTick Handler.
+  * @param  None
+  * @retval None
+  */
+void SysTick_Handler(void)
+{
+  TimingDelay_Decrement();
+}
+
 
 
 void Delay(__IO uint32_t nTime)
@@ -18,6 +40,7 @@ void Delay(__IO uint32_t nTime)
   TimingDelay = nTime;
 
   while(TimingDelay != 0);
+	//TimingDelay_Decrement();
 }
 
 /**
@@ -212,6 +235,28 @@ void vyblikaj(float* pfData){
    return; 
 }
 
+#ifdef  USE_FULL_ASSERT
+
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t* file, uint32_t line)
+{
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+
+  /* Infinite loop */
+  while (1)
+  {
+  }
+}
+#endif
+
+
 int main(){
     float pfData[3];
 	int i;
@@ -237,18 +282,22 @@ int main(){
 	
 	
 	for(i=0; i<3; i++)
-	{
-                pfData[i]=0.0;
-        }
+		{
+                	pfData[i]=0.0;
+       	 	}
     
 	
-	Demo_CompassReadAcc(pfData); //do pfData sa uloozia 3 cisla s 3 osi
+	//Demo_CompassReadAcc(pfData); //do pfData sa uloozia 3 cisla s 3 osi
     	
-	vyblikaj(pfData);
+	//vyblikaj(pfData);
 	
 	//nevyskoci z vyblikaj
+	STM_EVAL_LEDOff(LED3);
+	Delay(50);
 	STM_EVAL_LEDOn(LED3);
+
         
+
 
 
     	}
@@ -256,5 +305,5 @@ int main(){
     
 	//STM_EVAL_LEDOn(LED4); // test bod
 
-
+	return 0;
 }
