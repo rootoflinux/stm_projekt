@@ -257,7 +257,7 @@ void assert_failed(uint8_t* file, uint32_t line)
 #endif
 
 
-int main(){
+int main(void){
     float pfData[3];
 	int i;
 
@@ -295,7 +295,7 @@ int main(){
 	STM_EVAL_LEDOff(LED3);
 	Delay(50);
 	STM_EVAL_LEDOn(LED3);
-
+	Delay(50);
         
 
 
